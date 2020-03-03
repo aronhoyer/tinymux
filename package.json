@@ -1,0 +1,33 @@
+{
+  "name": "tinymux",
+  "version": "0.0.1",
+  "description": "Super lean REST API framework",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "rest",
+    "api",
+    "api framework",
+    "minimal"
+  ],
+  "author": "Aron Høyer (https://aronhoyer.com/)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aronhoyer/minimux.git"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "path-to-regexp": "^6.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.20.1"
+  },
+  "bugs": {
+    "url": "https://github.com/aronhoyer/minimux/issues"
+  },
+  "homepage": "https://github.com/aronhoyer/minimux#readme"
+}
