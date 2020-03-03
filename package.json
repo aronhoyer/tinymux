@@ -15,7 +15,7 @@
   "author": "Aron Høyer (https://aronhoyer.com/)",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/aronhoyer/minimux.git"
+    "url": "git+https://github.com/aronhoyer/tinymux.git"
   },
   "license": "ISC",
   "dependencies": {
@@ -27,7 +27,7 @@
     "eslint-plugin-import": "^2.20.1"
   },
   "bugs": {
-    "url": "https://github.com/aronhoyer/minimux/issues"
+    "url": "https://github.com/aronhoyer/tinymux/issues"
   },
-  "homepage": "https://github.com/aronhoyer/minimux#readme"
+  "homepage": "https://github.com/aronhoyer/tinymux#readme"
 }
