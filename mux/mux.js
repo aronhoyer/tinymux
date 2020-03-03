@@ -57,7 +57,7 @@ class Mux {
   }
 
   start(callback) {
-    http.createServer((req, res) => {
+    http.createServer(async (req, res) => {
       const handler = handlers.find((h) => pathToRegexp(h.path).test(req.url));
 
       if (!handler) {

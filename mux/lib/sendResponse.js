@@ -3,12 +3,13 @@ function sendResponse(response, responseWriter) {
     for (const key in response.headers) {
       if (response.headers.hasOwnProperty(key)) {
         const value = response.headers[key];
-        responseWriter.setHeader(key, value)
+        responseWriter.setHeader(key, value);
       }
     }
   }
-  responseWriter.statusCode = response.statusCode
-  responseWriter.end(JSON.stringify(response.body))
+
+  Object.assign(responseWriter, { statusCode: response.statusCode });
+  responseWriter.end(JSON.stringify(response.body));
 }
 
-module.exports = sendResponse
+module.exports = sendResponse;

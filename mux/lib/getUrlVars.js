@@ -1,18 +1,18 @@
 function getUrlVars(path, url) {
-  const pathParts = path.split('/')
-  const urlParts = url.split('/')
+  const pathParts = path.split('/');
+  const urlParts = url.split('/');
 
-  const vars = {}
+  const vars = {};
   pathParts.forEach((part, i) => {
-    if (!part.startsWith) return
+    if (!part.startsWith) return;
 
-    const key = part.split(':')[1]
-    if (!key) return
+    const key = part.split(':')[1];
+    if (!key) return;
 
-    vars[key] = urlParts[i]
-  })
+    vars[key] = urlParts[i];
+  });
 
-  return vars
+  return vars;
 }
 
-module.exports = getUrlVars
+module.exports = getUrlVars;
