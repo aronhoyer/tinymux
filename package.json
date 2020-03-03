@@ -1,6 +1,6 @@
 {
   "name": "tinymux",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "Super lean REST API framework",
   "main": "index.js",
   "scripts": {
