@@ -6,12 +6,13 @@ const sendResponse = require('./lib/sendResponse');
 const handleRequests = require('./lib/handleRequests');
 
 const handlers = [];
+const middlewares = [];
 
-class Mux {
+class Server {
   constructor({
     port,
     host = 'localhost',
-    logRequests = true,
+    logRequests = false,
   }) {
     this.port = port;
     this.host = host;
@@ -30,6 +31,10 @@ class Mux {
     });
 
     handlers.push({ path, callback, methods });
+  }
+
+  registerMiddleware(path, callback) {
+    middlewares.push({ path, callback })
   }
 
   notFoundHandler() {
@@ -73,6 +78,25 @@ class Mux {
       }
 
       if (this.logRequests) this.logger(req);
+
+      let headers = {}
+
+      middlewares.forEach((mw) => {
+        if (mw.path && pathToRegexp(mw.path).test(req.url)) {
+          const mwRes = mw.callback.call(this, req)
+          if (mwRes && mwRes.headers) {
+            headers = mwRes.headers
+          }
+        }
+      })
+
+      for (const key in headers) {
+        if (headers.hasOwnProperty(key)) {
+          const header = headers[key]
+          res.setHeader(key, header)
+        }
+      }
+
       handleRequests.call(this, handler, req, res);
     }).listen(this.port, () => {
       if (typeof callback === 'function') {
@@ -84,7 +108,7 @@ class Mux {
   }
 }
 
-module.exports = Mux;
+module.exports = Server;
 module.exports.methods = http.METHODS.reduce((methods, method) => ({
   ...methods,
   [method]: method,

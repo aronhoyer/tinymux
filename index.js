@@ -1,4 +1,4 @@
-const Mux = require('./mux/mux');
+const Server = require('./tinymux/tinymux');
 
-module.exports = Mux;
-module.exports.methods = Mux.methods;
+module.exports = Server;
+module.exports.methods = Server.methods;
