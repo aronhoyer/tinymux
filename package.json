@@ -4,7 +4,7 @@
   "description": "Super lean REST API framework",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint index.js tinymux/**"
   },
   "keywords": [
     "rest",
@@ -13,21 +13,33 @@
     "minimal"
   ],
   "author": "Aron Høyer (https://aronhoyer.com/)",
+  "license": "ISC",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/aronhoyer/tinymux.git"
   },
-  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aronhoyer/tinymux/issues"
+  },
+  "homepage": "https://github.com/aronhoyer/tinymux#readme",
   "dependencies": {
     "path-to-regexp": "^6.1.0"
   },
   "devDependencies": {
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-plugin-import": "^2.20.1"
+    "eslint-plugin-import": "^2.20.1",
+    "husky": "^4.2.3",
+    "lint-staged": "^10.0.8"
   },
-  "bugs": {
-    "url": "https://github.com/aronhoyer/tinymux/issues"
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
-  "homepage": "https://github.com/aronhoyer/tinymux#readme"
+  "lint-staged": {
+    "./**/*.{js}": [
+      "npm run lint -- --fix"
+    ]
+  }
 }
