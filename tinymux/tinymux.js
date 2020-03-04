@@ -34,7 +34,7 @@ class Server {
   }
 
   registerMiddleware(path, callback) {
-    middlewares.push({ path, callback })
+    middlewares.push({ path, callback });
   }
 
   notFoundHandler() {
@@ -79,21 +79,21 @@ class Server {
 
       if (this.logRequests) this.logger(req);
 
-      let headers = {}
+      let headers = {};
 
       middlewares.forEach((mw) => {
         if (mw.path && pathToRegexp(mw.path).test(req.url)) {
-          const mwRes = mw.callback.call(this, req)
+          const mwRes = mw.callback.call(this, req);
           if (mwRes && mwRes.headers) {
-            headers = mwRes.headers
+            headers = mwRes.headers;
           }
         }
-      })
+      });
 
       for (const key in headers) {
         if (headers.hasOwnProperty(key)) {
-          const header = headers[key]
-          res.setHeader(key, header)
+          const header = headers[key];
+          res.setHeader(key, header);
         }
       }
 
