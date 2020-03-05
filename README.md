@@ -51,7 +51,7 @@ s.registerMiddleware('(.*)', (req) => ({
     'Access-Control-Allow-Origin': '*',
     'Content-Type': 'application/json',
   }
-}), ['GET'])
+}))
 ```
 
 ## Handlers
