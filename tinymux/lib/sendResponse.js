@@ -1,4 +1,6 @@
 function sendResponse(response, responseWriter) {
+  responseWriter.setHeader('Content-Type', 'application/json');
+
   if (response.headers) {
     for (const key in response.headers) {
       if (response.headers.hasOwnProperty(key)) {
@@ -8,7 +10,7 @@ function sendResponse(response, responseWriter) {
     }
   }
 
-  Object.assign(responseWriter, { statusCode: response.statusCode });
+  Object.assign(responseWriter, { statusCode: response.statusCode || 200 });
   responseWriter.end(JSON.stringify(response.body));
 }
 
