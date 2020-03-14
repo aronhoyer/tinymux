@@ -22,9 +22,6 @@ s.handle('/v1/users', (req) => {
 
   // send response
   return {
-    headers: {
-      'Content-Type': 'application/json',
-    },
     statusCode: 201,
     body: {
       message: 'Hello, World!',
@@ -49,7 +46,6 @@ s.registerMiddleware('(.*)', (req) => console.log(new Date().toISOString(), req.
 s.registerMiddleware('(.*)', (req) => ({
   headers: {
     'Access-Control-Allow-Origin': '*',
-    'Content-Type': 'application/json',
   }
 }))
 ```
@@ -80,17 +76,11 @@ s.handle('/users', async (req) => {
 
     const insertedUser = await db.insertUser(req.body)
     return {
-      headers: {
-        'Content-Type': 'application/json',
-      },
       statusCode: 201,
       body: insertedUser,
     }
   } catch(err) {
     return {
-      headers: {
-        'Content-Type': 'application/json',
-      },
       statusCode: 500,
       body: {
         error: http.STATUS_CODES[500],
@@ -107,7 +97,6 @@ s.handle('/users/:id', async (req) => {
     if (!user) return s.notFoundHandler()
 
     return {
-      statusCode: 200,
       body: {
         payload: user,
       },
