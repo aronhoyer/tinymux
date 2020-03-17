@@ -27,7 +27,7 @@ s.handle('/v1/users', (req) => {
       message: 'Hello, World!',
     },
   }
-}, ['POST'])
+}, 'POST')
 
 s.start()
 ```
@@ -46,15 +46,19 @@ s.registerMiddleware('(.*)', (req) => console.log(new Date().toISOString(), req.
 s.registerMiddleware('(.*)', (req) => ({
   headers: {
     'Access-Control-Allow-Origin': '*',
-  }
+  },
 }))
 ```
 
 ## Handlers
 
+`s.handle(path: string, callback: (req: Request) => Response, method?: string)`
+
+The HTTP method is optional and defaults to `GET`.
+
 ### Built-in handlers
 
-tinymux comes with two built-in handlers. These can be overwritten if you want them to do something else.
+`tinymux` comes with two built-in handlers. These can be overwritten if you want them to do something else.
 
 ```js
 s.notFoundHandler()
@@ -87,7 +91,23 @@ s.handle('/users', async (req) => {
       },
     }
   }
-}, ['POST'])
+}, 'POST')
+
+s.handle('/users', async () => {
+  try {
+    const users = await db.getAllUsers()
+    return {
+      body: users,
+    }
+  } catch (err) {
+    return {
+      statusCode: err.statusCode || 500,
+      body: {
+        error: http.STATUS_CODES[err.statusCode || 500],
+      }.
+    }
+  }
+})
 
 s.handle('/users/:id', async (req) => {
   const { id } = req.vars
@@ -102,5 +122,5 @@ s.handle('/users/:id', async (req) => {
       },
     }
   }
-}, ['GET'])
+})
 ```

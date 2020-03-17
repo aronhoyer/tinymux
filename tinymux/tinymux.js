@@ -23,14 +23,18 @@ class Server {
     process.stdout.write(`\x1b[2m${new Date().toISOString()} ${req.method} ${req.url}\x1b[0m\n`);
   }
 
-  handle(path, callback, methods) {
-    methods.forEach((method) => {
-      if (!http.METHODS.includes(method)) {
-        throw new TypeError(`Invalid HTTP verb: ${method}`);
-      }
-    });
+  handle(path, callback, method = 'GET') {
+    const handlerExists = !!handlers.find((h) => h.path === path && h.method === method)
 
-    handlers.push({ path, callback, methods });
+    if (handlerExists) {
+      throw Object.assign(new Error(`A ${method} handler for path ${path} is already registered`), { name: 'ERR_DUPLICATE_HANDLERS' });
+    }
+
+    if (!http.METHODS.includes(method)) {
+      throw new TypeError(`Invalid HTTP verb: ${method}`);
+    }
+
+    handlers.push({ path, callback, method });
   }
 
   registerMiddleware(path, callback) {
@@ -63,7 +67,7 @@ class Server {
 
   start(callback) {
     http.createServer(async (req, res) => {
-      const handler = handlers.find((h) => pathToRegexp(h.path).test(req.url));
+      const handler = handlers.find((h) => pathToRegexp(h.path).test(req.url) && h.method === req.method);
 
       if (!handler) {
         const response = this.notFoundHandler();
@@ -71,7 +75,7 @@ class Server {
         return;
       }
 
-      if (!handler.methods.includes(req.method)) {
+      if (!handler.method.includes(req.method)) {
         const response = this.methodNotAllowedHandler();
         sendResponse(response, res);
         return;
